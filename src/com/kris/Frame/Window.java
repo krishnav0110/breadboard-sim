@@ -2,10 +2,12 @@ package com.kris.Frame;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
 
 public class Window extends JFrame{
 
@@ -29,7 +31,7 @@ public class Window extends JFrame{
         this.setBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
 
         this.setVisible(true);
-        init();
+        initComponents();
     }
 
     public static Window createDESApp(){
@@ -40,7 +42,7 @@ public class Window extends JFrame{
         return window;
     }
 
-    public void init(){
+    public void initComponents(){
 
         this.add(titleBar);
         this.add(mainArea);
@@ -54,5 +56,18 @@ public class Window extends JFrame{
         menu.setBackground(Color.GRAY);
         menu.setBounds((int) (this.getWidth() * 0.8), 30, (int) (this.getWidth() * 0.2), this.getHeight() - 30);
         menu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+
+        titleBar.minmizeBtn.addMouseListener(new MouseInputAdapter(){
+            
+            @Override
+            public void mouseClicked(MouseEvent e){
+
+                if(window.getExtendedState() == JFrame.NORMAL)
+                    window.setExtendedState(JFrame.ICONIFIED);
+                
+                else
+                    window.setExtendedState(JFrame.NORMAL);
+            }
+        });
     }
 }

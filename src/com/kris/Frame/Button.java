@@ -10,10 +10,16 @@ import javax.swing.event.MouseInputAdapter;
 public class Button extends JLabel{
  
     private ImageIcon icon;
+    private Color color;
 
-    public Button(){
+    /* the path specifies the relative path to the icon displayed.
+     *
+     * the color is the color of the background when mouse is hovered on the icon.
+     */
+    public Button(String path, Color color){
 
-        icon = new ImageIcon("src/res/closeBtn.png");
+        this.color = color;
+        icon = new ImageIcon(path);
         this.setIcon(icon);
         this.setBackground(Color.DARK_GRAY);
         this.setHorizontalAlignment(JLabel.CENTER);
@@ -39,7 +45,7 @@ public class Button extends JLabel{
     private void toggle(){
 
         if(this.getBackground() == Color.DARK_GRAY)
-            this.setBackground(Color.RED);
+            this.setBackground(color);
         else
             this.setBackground(Color.DARK_GRAY);
     }
