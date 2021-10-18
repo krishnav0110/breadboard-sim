@@ -1,5 +1,14 @@
 package com.kris.MainEngine;
 
+/* generates a new thread for updating and rendering the simulation part containing the breadboard.
+ *
+ * start funciton is called to start updating the objects states at particular intervals.
+ * By default, the interval is set to 30 times per second.
+ * 
+ * To stop this thread, the field value 'isRunning' should be set to false.
+ * Calling the stop() function won't do the same.
+ */
+
 public class Engine implements Runnable {
 
     private Renderer renderer;
@@ -59,6 +68,9 @@ public class Engine implements Runnable {
             if(delta >= FPS_CAP){
 
                 //update
+                for(int i = 0; i < renderer.getObjects().size(); i++){
+                    renderer.getObjects().get(i).update();
+                }
                 renderer.render();
                 testTime++;
                 delta -= FPS_CAP;
@@ -73,7 +85,7 @@ public class Engine implements Runnable {
             }
 
             if(System.currentTimeMillis() - timer >= 1000){
-                System.out.println("delta : " + delta);
+                System.out.println("FPS : " + testTime);
                 testTime = 0;
                 timer = System.currentTimeMillis();
             }

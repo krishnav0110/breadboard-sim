@@ -1,8 +1,11 @@
 package com.kris.Objects;
 
 import java.awt.Graphics;
+
 import java.awt.Color;
 
+/* Holes on breadboard will also act as tiles to capture Mouse Events
+ */
 public class Hole extends Object {
     
     public static final int PADDING = 5;
@@ -26,14 +29,27 @@ public class Hole extends Object {
         this.bit = bit;
     }
 
+    public void mouseClicked(int mx, int my){
+
+        if(mx > x && mx < x + TILE_WIDTH){
+            if(my > y && my < y + TILE_WIDTH){
+
+                if(bit.getValue())
+                    bit.setValue(false);
+                else
+                    bit.setValue(true);
+            }
+        }
+    }
+
     @Override
     public void render(Graphics g){
 
-        if(bit.getValue() == true)
+        if(bit.getValue())
             g.setColor(Color.GREEN);
         else
             g.setColor(Color.RED);
-
+        
         g.fillRect(x + PADDING, y + PADDING, WIDTH, WIDTH);
     }
 

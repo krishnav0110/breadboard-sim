@@ -2,13 +2,23 @@ package com.kris.MainEngine;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
 import java.util.LinkedList;
 
+import javax.swing.event.MouseInputListener;
+
+import com.kris.Objects.BreadBoard;
 import com.kris.Objects.Object;
 
-public class Renderer extends Canvas {
+/* objects needs to be rendered in the simulation is added via add(Object) function
+ * 
+ * the window also captures the Mouse Events and passes the position of the cursor to
+ * the necessary individual objects in the scene which updates its state if they are clicked.
+ */
+
+public class Renderer extends Canvas implements MouseInputListener {
 
     private LinkedList<Object> objects;
     private BufferStrategy bs;
@@ -17,6 +27,7 @@ public class Renderer extends Canvas {
     public Renderer(){
 
         objects = new LinkedList<>();
+        this.addMouseListener(this);
     }
 
     public void render(){
@@ -48,5 +59,64 @@ public class Renderer extends Canvas {
 
     public void add(Object object){
         objects.add(object);
-    }   
+    }
+    
+    public LinkedList<Object> getObjects(){
+        return objects;
+    }
+
+    /* passes the cursor position to clickable objects in the scene
+     *
+     * those objects check themselves if they are clicked and if so they update their state.
+     */
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        
+        int mx = e.getX(), my = e.getY();
+
+        BreadBoard board = (BreadBoard) (objects.getFirst());
+        if(mx > board.getX() && mx < board.getX() + board.getWidth()){
+            if(my > board.getY() && my < board.getY() + board.getHeight()){
+
+                for(int i = 0; i < board.getHoles().size(); i++)
+                    board.getHoles().get(i).mouseClicked(mx, my);
+            }
+        }  
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        
+        
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        
+        
+    }
 }
