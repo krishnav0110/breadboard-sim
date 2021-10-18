@@ -19,6 +19,7 @@ public class Hole extends Object {
     private int col;
 
     private Bit bit;
+    public boolean isConnected;
 
     public Hole(int x, int y, int row, int col, Bit bit){
 
@@ -27,19 +28,18 @@ public class Hole extends Object {
         this.row = row;
         this.col = col;
         this.bit = bit;
+        isConnected = false;
     }
 
-    public void mouseClicked(int mx, int my){
+    public boolean isClicked(int mx, int my){
 
         if(mx > x && mx < x + TILE_WIDTH){
             if(my > y && my < y + TILE_WIDTH){
 
-                if(bit.getValue())
-                    bit.setValue(false);
-                else
-                    bit.setValue(true);
+                return true;
             }
         }
+        return false;
     }
 
     @Override

@@ -18,12 +18,18 @@ public class Wire extends Object {
         this.color = color;
     }
 
+    public Hole getHole1(){ return hole1; }
+    public Hole getHole2(){ return hole2; }
+
     /* x1, y1, x2, y2 are only used to render the wire connected to the holes
      */
     public void connect(Hole h1, Hole h2){
-
+        
         hole1 = h1;
         hole2 = h2;
+        
+        hole1.isConnected = true;
+        hole2.isConnected = true;
 
         x1 = hole1.getX() + Hole.TILE_WIDTH / 2;
         y1 = hole1.getY() + Hole.TILE_WIDTH / 2;
@@ -33,6 +39,10 @@ public class Wire extends Object {
 
     public void disconnect(){
 
+        hole1.isConnected = false;
+        hole2.isConnected = false;
+        hole1.getBit().setValue(false);
+        hole2.getBit().setValue(false);
         hole1 = null;
         hole2 = null;
     }

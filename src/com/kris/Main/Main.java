@@ -2,13 +2,12 @@ package com.kris.Main;
 
 import javax.swing.event.MouseInputAdapter;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import com.kris.Frame.Window;
 import com.kris.MainEngine.Engine;
+import com.kris.Managers.DESAppMouseInputManager;
 import com.kris.Objects.BreadBoard;
-import com.kris.Objects.Wire;
 
 public class Main {
     
@@ -16,6 +15,7 @@ public class Main {
 
         Window window = Window.createDESApp();
         Engine engine = new Engine();
+        engine.getRenderer().setManager(new DESAppMouseInputManager());
 
         /* the renderer is set to cover the whole mainArea space in the window.
          */
@@ -31,12 +31,6 @@ public class Main {
         board.setCenterPositionRelativeTo(engine.getRenderer());
 
         engine.getRenderer().add(board);
-
-        engine.getRenderer().add(new Wire(Color.BLUE));
-        engine.getRenderer().add(new Wire(Color.RED));
-
-        ((Wire) engine.getRenderer().getObjects().get(1)).connect(board.getHoles().get(1), board.getHoles().get(361));
-        ((Wire) engine.getRenderer().getObjects().get(2)).connect(board.getHoles().get(32), board.getHoles().get(392));
         
 
         /////////////////////////////////////////////////////////////////////////////////////

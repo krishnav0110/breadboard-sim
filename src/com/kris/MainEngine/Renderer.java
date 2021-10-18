@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 import javax.swing.event.MouseInputListener;
 
-import com.kris.Objects.BreadBoard;
+import com.kris.Managers.DESAppMouseInputManager;
 import com.kris.Objects.Object;
 
 /* objects needs to be rendered in the simulation is added via add(Object) function
@@ -23,6 +23,13 @@ public class Renderer extends Canvas implements MouseInputListener {
     private LinkedList<Object> objects;
     private BufferStrategy bs;
     private Graphics g;
+
+    private DESAppMouseInputManager inputManager;
+
+    public void setManager(DESAppMouseInputManager inputManager){
+        this.inputManager = inputManager;
+        inputManager.renderer = this;
+    }
     
     public Renderer(){
 
@@ -72,28 +79,19 @@ public class Renderer extends Canvas implements MouseInputListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         
-        int mx = e.getX(), my = e.getY();
-
-        BreadBoard board = (BreadBoard) (objects.getFirst());
-        if(mx > board.getX() && mx < board.getX() + board.getWidth()){
-            if(my > board.getY() && my < board.getY() + board.getHeight()){
-
-                for(int i = 0; i < board.getHoles().size(); i++)
-                    board.getHoles().get(i).mouseClicked(mx, my);
-            }
-        }  
+        inputManager.mouseClicked(e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         
-        
+        inputManager.mousePressed(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         
-        
+        inputManager.mouseReleased(e);
     }
 
     @Override
