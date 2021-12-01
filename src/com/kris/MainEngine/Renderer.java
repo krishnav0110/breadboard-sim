@@ -1,40 +1,33 @@
 package com.kris.MainEngine;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
-
 import java.util.LinkedList;
 
-import javax.swing.event.MouseInputListener;
-
-import com.kris.Managers.DESAppMouseInputManager;
+import com.kris.Managers.ComponentPlacer;
+import com.kris.Managers.WirePlacer;
 import com.kris.Objects.Object;
 
-/* objects needs to be rendered in the simulation is added via add(Object) function
+/* objects that needs to be rendered in the simulation is added via add(Object) function
  * 
  * the window also captures the Mouse Events and passes the position of the cursor to
  * the necessary individual objects in the scene which updates its state if they are clicked.
  */
 
-public class Renderer extends Canvas implements MouseInputListener {
+public class Renderer extends Canvas {
 
     private LinkedList<Object> objects;
     private BufferStrategy bs;
     private Graphics g;
-
-    private DESAppMouseInputManager inputManager;
-
-    public void setManager(DESAppMouseInputManager inputManager){
-        this.inputManager = inputManager;
-        inputManager.renderer = this;
-    }
     
     public Renderer(){
 
         objects = new LinkedList<>();
-        this.addMouseListener(this);
+        this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        this.setBackground(new Color(20, 20, 20));
     }
 
     public void render(){
@@ -50,12 +43,10 @@ public class Renderer extends Canvas implements MouseInputListener {
 
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        for(int i = 0; i < objects.size(); i++){
-
-            objects.get(i).render(g);
+        for (Object object : objects) {
+            object.render(g);
         }
         
-        g.dispose();
         bs.show();
     }
 
@@ -72,49 +63,16 @@ public class Renderer extends Canvas implements MouseInputListener {
         return objects;
     }
 
-    /* passes the cursor position to clickable objects in the scene
-     *
-     * those objects check themselves if they are clicked and if so they update their state.
-     */
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        
-        inputManager.mouseClicked(e);
+    public void addManager(WirePlacer inputManager){
+        inputManager.renderer = this;
+        this.addMouseListener(inputManager);
+        this.addMouseMotionListener(inputManager);
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        
-        inputManager.mousePressed(e);
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        
-        inputManager.mouseReleased(e);
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        
-        
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        
-        
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        
-        
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        
-        
+    public void addManager(ComponentPlacer inputManager){
+        inputManager.renderer = this;
+        inputManager.init();
+        this.addMouseListener(inputManager);
+        this.addMouseMotionListener(inputManager);
     }
 }

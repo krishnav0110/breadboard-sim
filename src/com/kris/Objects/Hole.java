@@ -9,7 +9,7 @@ import java.awt.Color;
 public class Hole extends Object {
     
     public static final int PADDING = 5;
-    private static final int WIDTH = 10;
+    public static final int WIDTH = 10;
     public static final int TILE_WIDTH = PADDING * 2 + WIDTH;
     
     private int x;
@@ -44,38 +44,22 @@ public class Hole extends Object {
 
     @Override
     public void render(Graphics g){
-
-        if(bit.getValue())
-            g.setColor(Color.GREEN);
-        else
-            g.setColor(Color.RED);
-        
+        // color of the holes are temporary
+        g.setColor(Color.BLACK);   
         g.fillRect(x + PADDING, y + PADDING, WIDTH, WIDTH);
     }
 
-    public int getRow(){
-        return row;
-    }
-    public int getCol(){
-        return col;
-    }
-    public void setRow(int row){
-        this.row = row;
-    }
-    public void setCol(int col){
-        this.col = col;
-    }
-    public int getX(){
-        return x;
-    }
-    public int getY(){
-        return y;
-    }
+    public int getRow(){ return row; }
+    public int getCol(){ return col; }
+    public void setRow(int row){ this.row = row; }
+    public void setCol(int col){ this.col = col; }
+
+    public int getX(){ return x; }
+    public int getY(){ return y; }
+
     public void setPosition(int x, int y){
         this.x = x;
         this.y = y;
     }
-    public Bit getBit(){
-        return bit;
-    }
+    public Bit getBit(){ return bit; }
 }

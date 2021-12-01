@@ -35,32 +35,13 @@ public class BreadBoard extends Object{
     @Override
     public void render(Graphics g){
 
-        /* rendering the breadboard
-         */
         g.setColor(new Color(220, 220, 220));
         g.fillRect(x, y, width, height);
 
-        /* aesthetic separation of collection of holes
-         */
-        g.setColor(new Color(150, 150, 150));
-        g.fillRect(x, y + 2 * Hole.TILE_WIDTH + PADDING, width, Hole.TILE_WIDTH);
-        g.fillRect(x, y + (height - Hole.TILE_WIDTH) / 2, width, Hole.TILE_WIDTH);
-        g.fillRect(x, y + 14 * Hole.TILE_WIDTH + PADDING, width, Hole.TILE_WIDTH);
+        renderAesthetics(g);
 
-        /* two lines on the board indication row of negative potential
-         */
-        g.setColor(Color.BLUE);
-        g.fillRect(x + 20, y + PADDING, width - 40, 2);
-        g.fillRect(x + 20, y + 15 * Hole.TILE_WIDTH + PADDING, width - 40, 2);
-
-        /* two lines on the board indication row of positive potential
-         */
-        g.setColor(Color.RED);
-        g.fillRect(x + 20, y + 2 * Hole.TILE_WIDTH + PADDING, width - 40, 2);
-        g.fillRect(x + 20, y + height - PADDING, width - 40, 2);
-
-        for(int i = 0; i < holes.size(); i++)
-            holes.get(i).render(g);
+        for(Hole hole : holes)
+            hole.render(g);
     }
 
     public void setCenterPositionRelativeTo(Component c){
@@ -77,12 +58,12 @@ public class BreadBoard extends Object{
 
         int new_x, new_y;
 
-        for(int i = 0; i < holes.size(); i++){
+        for(Hole hole : holes){
 
-            new_x = this.x + holes.get(i).getX();
-            new_y = this.y + holes.get(i).getY();
+            new_x = this.x + hole.getX();
+            new_y = this.y + hole.getY();
 
-            holes.get(i).setPosition(new_x, new_y);
+            hole.setPosition(new_x, new_y);
         }
     }
 
@@ -104,8 +85,6 @@ public class BreadBoard extends Object{
 
         //last two rows
         generateConnectedHoles(3, 13, 1, 2, 30, false);
-
-        holes.get(31).getBit().setValue(true);
     }
 
     /* argument y_off is only used for setting the y_position of the holes from the last added hole row
@@ -152,6 +131,28 @@ public class BreadBoard extends Object{
                 }
             }
         }
+    }
+
+    private void renderAesthetics(Graphics g){
+
+        /* aesthetic separation of collection of holes
+         */
+        g.setColor(new Color(150, 150, 150));
+        g.fillRect(x, y + 2 * Hole.TILE_WIDTH + PADDING + Hole.PADDING, width, Hole.WIDTH);
+        g.fillRect(x, y + (height - Hole.WIDTH) / 2, width, Hole.WIDTH);
+        g.fillRect(x, y + 14 * Hole.TILE_WIDTH + PADDING + Hole.PADDING, width, Hole.WIDTH);
+
+        /* two lines on the board indication row of negative potential
+         */
+        g.setColor(Color.BLUE);
+        g.fillRect(x + 20, y + PADDING, width - 40, 2);
+        g.fillRect(x + 20, y + 15 * Hole.TILE_WIDTH + PADDING, width - 40, 2);
+
+        /* two lines on the board indication row of positive potential
+         */
+        g.setColor(Color.RED);
+        g.fillRect(x + 20, y + 2 * Hole.TILE_WIDTH + PADDING, width - 40, 2);
+        g.fillRect(x + 20, y + height - PADDING, width - 40, 2);
     }
 
     @Override

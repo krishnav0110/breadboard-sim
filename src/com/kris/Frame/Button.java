@@ -42,6 +42,8 @@ public class Button extends JLabel{
         });
     }
 
+    /* the background color changes to 'color' if mouse is hovered on the icon
+     */
     private void toggle(){
 
         if(this.getBackground() == Color.DARK_GRAY)

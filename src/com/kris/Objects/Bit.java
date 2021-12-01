@@ -8,16 +8,23 @@ package com.kris.Objects;
 
 public class Bit {
     
-    public boolean bit;
+    private Value bit;
 
     public Bit(){
-        bit = false;
+        bit = Value.UNDETERMINED;
     }
 
-    public boolean getValue(){
+    public Value getValue(){
         return bit;
     }
-    public void setValue(boolean bit){
+    public void setValue(Value bit){
         this.bit = bit;
+    }
+
+    public enum Value {
+
+        TRUE,
+        FALSE,
+        UNDETERMINED
     }
 }

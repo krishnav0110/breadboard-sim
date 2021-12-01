@@ -10,7 +10,7 @@ import javax.swing.JLabel;
  * this class is made so that titleBar generated is independent of the system on 
  * which it is running.
  *
- * the functionality of the close button is added in the main() function to
+ * the functionality of the close button is added in the Window class to
  * clean up all the resources and then exit.
  */
 public class TitleBar extends JLabel {
@@ -20,8 +20,8 @@ public class TitleBar extends JLabel {
     
     public TitleBar(String title){
 
-        closeBtn = new Button("src/res/closeBtn.png", Color.RED);
-        minmizeBtn = new Button("src/res/minmizeBtn.png", Color.GRAY);
+        closeBtn = new Button("src/res/assets/closeBtn.png", Color.RED);
+        minmizeBtn = new Button("src/res/assets/minmizeBtn.png", Color.GRAY);
         this.setText(title);
         this.setBackground(Color.DARK_GRAY);
         this.setForeground(Color.WHITE);
